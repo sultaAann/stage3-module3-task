@@ -133,4 +133,7 @@ implementing all validations in business logic code or declaratively, e.g. via c
 3. Application packages root: `com.mjc.school`.
 4. Java Code Convention is mandatory.
 
+## Our solution review:
+If you have finished task and would like to see the original solution of it written by our experts, write in #stage-3 channel about it. Access will be provided.
+
 [1]: https://docs.spring.io/spring-framework/docs/5.3.x/reference/html/core.html#aop
