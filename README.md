@@ -125,6 +125,8 @@ implementing all validations in business logic code or declaratively, e.g. via c
 7. Convenient error/exception should be implemented: all errors should be meaningful. Errors should
    contain `errorMessage` and `errorCode`, where `errorCode` is your custom code.
 8. Application should be tested and pass all tests suites.
+9. Change archunit-junit dependency to archunit-junit5:  `testImplementation "com.tngtech.archunit:archunit-junit5:1.0.0"`
+10. Use javax `implementation "org.springframework.boot:spring-boot-starter-data-jpa:2.7.7"`. Exactly `2.7.7` version, because older versions is jakarta.
 
 #### Application requirements:
 
