@@ -26,9 +26,7 @@ and `controller` layers:
 - `com.mjc.school.service.BaseService`
 - `com.mjc.school.controller.BaseController`
 
-Use them as base point for your solution.
-
-You are also provided with `org.springframework.boot:spring-boot-starter-data-jpa` dependency which should be used for
+Use `org.springframework.boot:spring-boot-starter-data-jpa` dependency for
 your solution, but with only one restriction: **it's prohibited to use CRUD repositories**, because the main goal of
 this module is to get familiar with JPA/ORM:
 
