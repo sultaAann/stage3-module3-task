@@ -18,7 +18,7 @@ The recommended timeline for the whole module is 2 weeks.
 
 #### Prerequisites
 
-As in the **Spring core** module, you are provided with the basic interfaces for `repository`, `service`
+Your **Spring core** solution. Do not delete or move basic interfaces for `repository`, `service`
 and `controller` layers:
 
 - `com.mjc.school.repository.model.BaseEntity`
