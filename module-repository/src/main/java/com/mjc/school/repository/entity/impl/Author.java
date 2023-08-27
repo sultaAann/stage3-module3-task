@@ -4,9 +4,10 @@ import com.mjc.school.repository.entity.BaseEntity;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
-@Table(name = "author")
+@Table(name = "authors")
 public class Author implements BaseEntity<Long> {
 
     @Id
@@ -15,13 +16,14 @@ public class Author implements BaseEntity<Long> {
 
     private String name;
 
-    @Column(name = "createDate")
-    @Temporal(value = TemporalType.TIMESTAMP)
+    @Column(name = "create_date")
     private LocalDateTime createdDate;
 
-    @Column(name = "lastUpdateDate")
-    @Temporal(value = TemporalType.TIMESTAMP)
+    @Column(name = "last_update_date")
     private LocalDateTime lastUpdatedDate;
+
+    @OneToMany(mappedBy = "")
+    private List<News> news;
 
     @Override
     public Long getId() {

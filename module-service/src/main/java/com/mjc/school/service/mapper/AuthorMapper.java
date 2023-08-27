@@ -1,6 +1,6 @@
 package com.mjc.school.service.mapper;
 
-import com.mjc.school.repository.entity.impl.Author;
+import com.mjc.school.repository.model.impl.AuthorModel;
 import com.mjc.school.service.dto.AuthorDTORequest;
 import com.mjc.school.service.dto.AuthorDTOResponse;
 import org.mapstruct.Mapper;
@@ -11,7 +11,7 @@ public interface AuthorMapper {
 
     AuthorMapper INSTANCE = Mappers.getMapper(AuthorMapper.class);
 
-    AuthorDTOResponse modelToDto(Author model);
+    AuthorDTOResponse modelToDto(AuthorModel model);
 
-    Author dtoToModel(AuthorDTORequest modelDTO);
+    AuthorModel dtoToModel(AuthorDTORequest modelDTO);
 }

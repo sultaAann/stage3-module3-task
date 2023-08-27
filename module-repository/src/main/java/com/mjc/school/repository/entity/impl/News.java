@@ -4,6 +4,7 @@ import com.mjc.school.repository.entity.BaseEntity;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "news")
@@ -15,14 +16,23 @@ public class News implements BaseEntity<Long> {
     private String title;
     private String content;
 
-    @Column(name = "createDate")
-    @Temporal(value = TemporalType.TIMESTAMP)
+    @Column(name = "create_date")
     private LocalDateTime createdDate;
 
-    @Column(name = "lastUpdatedDate")
-    @Temporal(value = TemporalType.TIMESTAMP)
+    @Column(name = "last_update_date")
     private LocalDateTime lastUpdatedDate;
-    private Long authorId;
+
+    @ManyToOne
+    @JoinColumn(name = "author_id")
+    private Author authorId;
+
+    @ManyToMany
+    @JoinTable(
+            name = "newsid-tagid",
+            joinColumns = {@JoinColumn(name = "newsId")},
+            inverseJoinColumns = {@JoinColumn(name = "tagId")}
+    )
+    private List<Tag> tags;
 
     @Override
     public Long getId() {
@@ -66,11 +76,11 @@ public class News implements BaseEntity<Long> {
         this.lastUpdatedDate = lastUpdatedDate;
     }
 
-    public Long getAuthorId() {
+    public Author getAuthorId() {
         return authorId;
     }
 
-    public void setAuthorId(Long authorID) {
+    public void setAuthorId(Author authorID) {
         this.authorId = authorID;
     }
 }

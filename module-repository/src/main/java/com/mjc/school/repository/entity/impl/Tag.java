@@ -3,9 +3,10 @@ package com.mjc.school.repository.entity.impl;
 import com.mjc.school.repository.entity.BaseEntity;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.util.List;
+
 @Entity
-@Table(name = "tag")
+@Table(name = "tags")
 public class Tag implements BaseEntity<Long> {
 
     @Id
@@ -14,13 +15,8 @@ public class Tag implements BaseEntity<Long> {
 
     private String name;
 
-    @Column(name = "createDate")
-    @Temporal(value = TemporalType.TIMESTAMP)
-    private LocalDateTime createdDate;
-
-    @Column(name = "lastUpdatedDate")
-    @Temporal(value = TemporalType.TIMESTAMP)
-    private LocalDateTime lastUpdatedDate;
+    @ManyToMany(mappedBy = "tags")
+    private List<News> news;
 
     @Override
     public Long getId() {
@@ -40,19 +36,4 @@ public class Tag implements BaseEntity<Long> {
         name = name;
     }
 
-    public LocalDateTime getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(LocalDateTime createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public LocalDateTime getLastUpdatedDate() {
-        return lastUpdatedDate;
-    }
-
-    public void setLastUpdatedDate(LocalDateTime lastUpdatedDate) {
-        this.lastUpdatedDate = lastUpdatedDate;
-    }
 }

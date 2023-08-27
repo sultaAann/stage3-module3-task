@@ -2,18 +2,17 @@ package com.mjc.school;
 
 import com.mjc.school.controller.commands.impl.authorCommand.*;
 import com.mjc.school.controller.commands.impl.newsCommand.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
+import org.springframework.context.ApplicationContext;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Scanner;
 
-@SpringBootApplication
-public class Main {
+@SpringBootApplication(scanBasePackages = {"com.mjc.school", "com.mjc.school.service.impl"})
+public class Main implements CommandLineRunner {
 
     private static final String COMMANDS = """
             Enter the number of operation:
@@ -29,10 +28,15 @@ public class Main {
             10 - Remove author by id.
             0 - Exit.
             """;
+    @Autowired
+    private ApplicationContext context;
 
     public static void main(String[] args) {
-        var context = SpringApplication.run(Main.class);
+        SpringApplication.run(Main.class);
+    }
 
+    @Override
+    public void run(String... args) throws Exception {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             try {
@@ -59,5 +63,4 @@ public class Main {
             }
         }
     }
-
 }

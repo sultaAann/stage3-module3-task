@@ -27,14 +27,12 @@ public class TagRepository implements BaseRepository<Tag, Long> {
 
     @Override
     public Tag create(Tag model) {
-        model.setCreatedDate(LocalDateTime.now());
         entityManager.persist(model);
         return model;
     }
 
     @Override
     public Tag update(Tag model) {
-        model.setLastUpdatedDate(LocalDateTime.now());
         return entityManager.merge(model);
     }
 

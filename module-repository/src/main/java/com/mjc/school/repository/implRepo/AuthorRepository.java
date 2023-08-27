@@ -4,15 +4,17 @@ package com.mjc.school.repository.implRepo;
 import com.mjc.school.repository.BaseRepository;
 import com.mjc.school.repository.entity.impl.Author;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 @Repository
+@Transactional(readOnly = true)
 public class AuthorRepository implements BaseRepository<Author, Long> {
 
     @PersistenceContext
