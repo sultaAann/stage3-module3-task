@@ -23,7 +23,7 @@ public class Author implements BaseEntity<Long> {
     @Column(name = "last_update_date")
     private LocalDateTime lastUpdatedDate;
 
-    @OneToMany(mappedBy = "")
+    @OneToMany(mappedBy = "authorId", cascade = CascadeType.REMOVE)
     private List<News> news;
 
     @Override

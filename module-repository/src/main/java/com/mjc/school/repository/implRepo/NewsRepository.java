@@ -5,11 +5,13 @@ import com.mjc.school.repository.BaseRepository;
 import com.mjc.school.repository.entity.impl.Author;
 import com.mjc.school.repository.entity.impl.News;
 import com.mjc.school.repository.entity.impl.Tag;
+import org.hibernate.Session;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
 import java.time.LocalDateTime;
@@ -20,8 +22,13 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public class NewsRepository implements BaseRepository<News, Long>, AdditionalCommands<News, Long> {
 
-    @PersistenceContext
+
     private EntityManager entityManager;
+
+    @Autowired
+    public void setEntityManager(EntityManagerFactory entityManagerFactory) {
+        this.entityManager = entityManagerFactory.createEntityManager();
+    }
 
     @Override
     public List<News> readAll() {
@@ -43,12 +50,9 @@ public class NewsRepository implements BaseRepository<News, Long>, AdditionalCom
     public News create(News model) {
         entityManager.getTransaction().begin();
         model.setCreatedDate(LocalDateTime.now());
-        System.out.println("Saving");
         entityManager.persist(model);
-        News res = entityManager.find(News.class, model);
         entityManager.getTransaction().commit();
-        System.out.println("amfsmap");
-        return res;
+        return model;
     }
 
     @Override
@@ -62,11 +66,12 @@ public class NewsRepository implements BaseRepository<News, Long>, AdditionalCom
 
     @Override
     public boolean deleteById(Long id) {
+        Session session = entityManager.unwrap(Session.class);
         if (existById(id)) {
-            entityManager.getTransaction().commit();
-            News news = entityManager.find(News.class, id);
-            entityManager.remove(news);
-            entityManager.getTransaction().commit();
+            session.getTransaction().begin();
+            session.remove(id);
+            session.getTransaction().commit();
+            session.close();
             return true;
         } else {
             return false;
