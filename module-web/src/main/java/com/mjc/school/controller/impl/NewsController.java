@@ -4,8 +4,7 @@ import com.mjc.school.controller.BaseController;
 import com.mjc.school.controller.annotations.CommandHandler;
 import com.mjc.school.service.dto.NewsDTORequest;
 import com.mjc.school.service.dto.NewsDTOResponse;
-import com.mjc.school.service.exceptions.NewsIDException;
-import com.mjc.school.service.exceptions.TitleOrContentLengthException;
+import com.mjc.school.service.exceptions.*;
 import com.mjc.school.service.impl.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,10 +14,9 @@ import java.util.Scanner;
 
 @Controller
 public class NewsController implements BaseController<NewsDTORequest, NewsDTOResponse, Long> {
+    private final Scanner scanner = new Scanner(System.in);
     @Autowired
     private NewsService service;
-
-    private final Scanner scanner = new Scanner(System.in);
 
     @Override
     @CommandHandler(commandNumber = 1)
@@ -29,7 +27,7 @@ public class NewsController implements BaseController<NewsDTORequest, NewsDTORes
 
     @Override
     @CommandHandler(commandNumber = 2)
-    public NewsDTOResponse readById(Long id) throws NewsIDException {
+    public NewsDTOResponse readById(Long id) throws NewsIDException, AuthorIDException, TagIDException {
         NewsDTOResponse res = service.readById(id);
         System.out.println(res);
         return res;
@@ -37,7 +35,7 @@ public class NewsController implements BaseController<NewsDTORequest, NewsDTORes
 
     @Override
     @CommandHandler(commandNumber = 3)
-    public NewsDTOResponse create(NewsDTORequest createRequest) throws TitleOrContentLengthException {
+    public NewsDTOResponse create(NewsDTORequest createRequest) throws TitleOrContentLengthException, AuthorNameException, AuthorIDException, TagNameException {
         NewsDTOResponse res = service.create(createRequest);
         System.out.println(res);
         return res;
@@ -45,7 +43,7 @@ public class NewsController implements BaseController<NewsDTORequest, NewsDTORes
 
     @Override
     @CommandHandler(commandNumber = 4)
-    public NewsDTOResponse update(NewsDTORequest updateRequest) throws NewsIDException, TitleOrContentLengthException {
+    public NewsDTOResponse update(NewsDTORequest updateRequest) throws NewsIDException, TitleOrContentLengthException, AuthorIDException, AuthorNameException, TagNameException, TagIDException {
         NewsDTOResponse res = service.update(updateRequest);
         System.out.println(res);
         return res;
@@ -53,7 +51,7 @@ public class NewsController implements BaseController<NewsDTORequest, NewsDTORes
 
     @Override
     @CommandHandler(commandNumber = 5)
-    public boolean deleteById(Long id) throws NewsIDException {
+    public boolean deleteById(Long id) throws NewsIDException, AuthorIDException, TagIDException {
         Boolean res = service.deleteById(id);
         System.out.println(res);
         return res;
@@ -88,5 +86,31 @@ public class NewsController implements BaseController<NewsDTORequest, NewsDTORes
             });
             System.out.println("All related authorId fields have been replaced with null.");
         }
+    }
+
+    // Additional Commands
+    @CommandHandler(commandNumber = 16)
+    public List<NewsDTOResponse> readByTagName(String tagName) {
+        return service.readByTagName(tagName);
+    }
+
+    @CommandHandler(commandNumber = 17)
+    public List<NewsDTOResponse> readByTagId(Long tagId) {
+        return service.readByTagId(tagId);
+    }
+
+    @CommandHandler(commandNumber = 18)
+    public List<NewsDTOResponse> readByAuthorName(String authorName) {
+        return service.readByAuthorName(authorName);
+    }
+
+    @CommandHandler(commandNumber = 19)
+    public List<NewsDTOResponse> readByTitle(String title) {
+        return service.readByTitle(title);
+    }
+
+    @CommandHandler(commandNumber = 20)
+    public List<NewsDTOResponse> readByContent(String content) {
+        return service.readByContent(content);
     }
 }

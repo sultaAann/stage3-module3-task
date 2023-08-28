@@ -7,4 +7,5 @@ public class ErrorMessages {
     public static final String ERROR_CODE_4 = "ERROR_CODE: 000004 ERROR_MESSAGE: Author Id does not exist.";
     public static final String ERROR_CODE_5 = "ERROR_CODE: 000005 ERROR_MESSAGE: Author Id should be number.";
     public static final String ERROR_CODE_6 = "ERROR_CODE: 000006 ERROR_MESSAGE: Author name can not be less than 3 and more than 15 symbols.";
+    public static final String ERROR_CODE_7 = "ERROR_CODE: 000007 ERROR_MESSAGE: Tag name can not be less than 3 and more than 15 symbols.";
 }

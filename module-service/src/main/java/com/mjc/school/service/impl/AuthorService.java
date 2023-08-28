@@ -1,7 +1,7 @@
 package com.mjc.school.service.impl;
 
-import com.mjc.school.repository.BaseRepository;
-import com.mjc.school.repository.model.impl.AuthorModel;
+import com.mjc.school.repository.entity.impl.Author;
+import com.mjc.school.repository.implRepo.AuthorRepository;
 import com.mjc.school.service.BaseService;
 import com.mjc.school.service.dto.AuthorDTORequest;
 import com.mjc.school.service.dto.AuthorDTOResponse;
@@ -17,7 +17,7 @@ import java.util.List;
 @Service
 public class AuthorService implements BaseService<AuthorDTORequest, AuthorDTOResponse, Long> {
     @Autowired
-    private BaseRepository<AuthorModel, Long> repository;
+    private AuthorRepository repository;
 
     @Override
     public List<AuthorDTOResponse> readAll() {
@@ -38,7 +38,7 @@ public class AuthorService implements BaseService<AuthorDTORequest, AuthorDTORes
     @Override
     public AuthorDTOResponse create(AuthorDTORequest createRequest) throws AuthorNameException {
         Validator.authorNameValidator(createRequest.name());
-        AuthorModel model = AuthorMapper.INSTANCE.dtoToModel(createRequest);
+        Author model = AuthorMapper.INSTANCE.dtoToModel(createRequest);
         repository.create(model);
         return AuthorMapper.INSTANCE.modelToDto(model);
     }
@@ -47,7 +47,7 @@ public class AuthorService implements BaseService<AuthorDTORequest, AuthorDTORes
     public AuthorDTOResponse update(AuthorDTORequest updateRequest) throws AuthorIDException, AuthorNameException {
         Validator.authorIdValidator(String.valueOf(updateRequest.id()));
         Validator.authorNameValidator(updateRequest.name());
-        AuthorModel model = AuthorMapper.INSTANCE.dtoToModel(updateRequest);
+        Author model = AuthorMapper.INSTANCE.dtoToModel(updateRequest);
         repository.update(model);
         return AuthorMapper.INSTANCE.modelToDto(model);
     }
@@ -56,5 +56,11 @@ public class AuthorService implements BaseService<AuthorDTORequest, AuthorDTORes
     public boolean deleteById(Long id) throws AuthorIDException {
         Validator.authorIdValidator(String.valueOf(id));
         return repository.deleteById(id);
+    }
+
+    public List<AuthorDTOResponse> readAuthorByNewsId(Long id) {
+        return repository.readAuthorByNewsId(id).stream()
+                .map(AuthorMapper.INSTANCE::modelToDto)
+                .toList();
     }
 }

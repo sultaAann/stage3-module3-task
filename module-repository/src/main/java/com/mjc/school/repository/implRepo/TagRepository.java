@@ -1,12 +1,13 @@
 package com.mjc.school.repository.implRepo;
 
 import com.mjc.school.repository.BaseRepository;
+import com.mjc.school.repository.entity.impl.News;
 import com.mjc.school.repository.entity.impl.Tag;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.time.LocalDateTime;
+import javax.persistence.criteria.*;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,5 +52,15 @@ public class TagRepository implements BaseRepository<Tag, Long> {
     public boolean existById(Long id) {
         Tag model = entityManager.find(Tag.class, id);
         return entityManager.contains(model);
+    }
+
+    //Additional Commands
+    public List<Tag> readTagsByNewsId(Long id) {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Tag> criteriaQuery = criteriaBuilder.createQuery(Tag.class);
+        Root<Tag> tags = criteriaQuery.from(Tag.class);
+        Join<Tag, News> newsJoin = tags.join("news", JoinType.LEFT);
+        criteriaQuery.where(criteriaBuilder.equal(newsJoin.get("tag_id"), id));
+        return entityManager.createQuery(criteriaQuery).getResultList();
     }
 }

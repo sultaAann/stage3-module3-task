@@ -1,9 +1,6 @@
 package com.mjc.school.controller;
 
-import com.mjc.school.service.exceptions.AuthorIDException;
-import com.mjc.school.service.exceptions.AuthorNameException;
-import com.mjc.school.service.exceptions.NewsIDException;
-import com.mjc.school.service.exceptions.TitleOrContentLengthException;
+import com.mjc.school.service.exceptions.*;
 
 import java.util.List;
 
@@ -11,11 +8,11 @@ public interface BaseController<T, R, K> {
 
     List<R> readAll();
 
-    R readById(K id) throws AuthorIDException, NewsIDException;
+    R readById(K id) throws AuthorIDException, NewsIDException, TagIDException;
 
-    R create(T createRequest) throws AuthorNameException, AuthorIDException, TitleOrContentLengthException;
+    R create(T createRequest) throws AuthorNameException, AuthorIDException, TitleOrContentLengthException, TagNameException;
 
-    R update(T updateRequest) throws AuthorIDException, AuthorNameException, NewsIDException, TitleOrContentLengthException;
+    R update(T updateRequest) throws AuthorIDException, AuthorNameException, NewsIDException, TitleOrContentLengthException, TagNameException, TagIDException;
 
-    boolean deleteById(K id) throws AuthorIDException, NewsIDException;
+    boolean deleteById(K id) throws AuthorIDException, NewsIDException, TagIDException;
 }

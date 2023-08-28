@@ -3,18 +3,17 @@ package com.mjc.school.repository.implRepo;
 
 import com.mjc.school.repository.BaseRepository;
 import com.mjc.school.repository.entity.impl.Author;
+import com.mjc.school.repository.entity.impl.News;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
+import javax.persistence.criteria.*;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 @Repository
-@Transactional(readOnly = true)
 public class AuthorRepository implements BaseRepository<Author, Long> {
 
     @PersistenceContext
@@ -37,14 +36,12 @@ public class AuthorRepository implements BaseRepository<Author, Long> {
         return model;
     }
 
-    @Transactional
     @Override
     public Author update(Author model) {
         model.setLastUpdatedDate(LocalDateTime.now());
         return entityManager.merge(model);
     }
 
-    @Transactional
     @Override
     public boolean deleteById(Long id) {
         if (existById(id)) {
@@ -60,5 +57,16 @@ public class AuthorRepository implements BaseRepository<Author, Long> {
     public boolean existById(Long id) {
         Author author = entityManager.find(Author.class, id);
         return entityManager.contains(author);
+    }
+
+
+    // Additional command
+    public List<Author> readAuthorByNewsId(Long id) {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Author> criteriaQuery = criteriaBuilder.createQuery(Author.class);
+        Root<Author> tags = criteriaQuery.from(Author.class);
+        Join<Author, News> newsJoin = tags.join("news", JoinType.LEFT);
+        criteriaQuery.where(criteriaBuilder.equal(newsJoin.get("author_id"), id));
+        return entityManager.createQuery(criteriaQuery).getResultList();
     }
 }

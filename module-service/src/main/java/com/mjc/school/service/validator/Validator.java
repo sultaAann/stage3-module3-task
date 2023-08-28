@@ -1,9 +1,6 @@
 package com.mjc.school.service.validator;
 
-import com.mjc.school.service.exceptions.AuthorIDException;
-import com.mjc.school.service.exceptions.AuthorNameException;
-import com.mjc.school.service.exceptions.NewsIDException;
-import com.mjc.school.service.exceptions.TitleOrContentLengthException;
+import com.mjc.school.service.exceptions.*;
 
 import static com.mjc.school.service.ErrorMessages.*;
 
@@ -42,5 +39,21 @@ public class Validator {
         if (authorName.length() < 3 || authorName.length() > 15) {
             throw new AuthorNameException(ERROR_CODE_6);
         }
+    }
+
+    public static void tagNameValidator(String tagName) throws TagNameException {
+        if (tagName.length() < 3 || tagName.length() > 15) {
+            throw new TagNameException(ERROR_CODE_7);
+        }
+    }
+
+    public static void tagIdValidator(String tagId) throws TagIDException {
+        long id;
+        try {
+            id = Long.parseLong(tagId);
+        } catch (NumberFormatException e) {
+            throw new TagIDException(ERROR_CODE_5);
+        }
+        if (id < 0) throw new TagIDException(ERROR_CODE_4);
     }
 }
