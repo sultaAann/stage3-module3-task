@@ -1,8 +1,10 @@
-package com.mjc.school.repository;
+package com.mjc.school.controller;
+
+
 
 import java.util.List;
 
-public interface AdditionalCommands<T, K> {
+public interface NewsCommandsController<T, K> {
     List<T> readByTagName(String tagName);
 
     List<T> readByTagId(K tagId);

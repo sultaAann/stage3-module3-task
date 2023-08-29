@@ -1,7 +1,9 @@
 package com.mjc.school.service.impl;
 
+import com.mjc.school.repository.AuthorCommands;
+import com.mjc.school.repository.BaseRepository;
 import com.mjc.school.repository.model.impl.Author;
-import com.mjc.school.repository.impl.AuthorRepository;
+import com.mjc.school.service.AuthorCommandsService;
 import com.mjc.school.service.BaseService;
 import com.mjc.school.service.dto.AuthorDTORequest;
 import com.mjc.school.service.dto.AuthorDTOResponse;
@@ -15,9 +17,12 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class AuthorService implements BaseService<AuthorDTORequest, AuthorDTOResponse, Long> {
+public class AuthorService implements BaseService<AuthorDTORequest, AuthorDTOResponse, Long>, AuthorCommandsService<AuthorDTOResponse, Long> {
     @Autowired
-    private AuthorRepository repository;
+    private BaseRepository<Author, Long> repository;
+
+    @Autowired
+    private AuthorCommands<Author, Long> authorCommands;
 
     @Override
     public List<AuthorDTOResponse> readAll() {
@@ -58,8 +63,9 @@ public class AuthorService implements BaseService<AuthorDTORequest, AuthorDTORes
         return repository.deleteById(id);
     }
 
+    @Override
     public List<AuthorDTOResponse> readAuthorByNewsId(Long id) {
-        return repository.readAuthorByNewsId(id).stream()
+        return authorCommands.readAuthorByNewsId(id).stream()
                 .map(AuthorMapper.INSTANCE::modelToDto)
                 .toList();
     }

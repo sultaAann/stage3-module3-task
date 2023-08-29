@@ -1,7 +1,7 @@
 package com.mjc.school.repository.impl;
 
-import com.mjc.school.repository.AdditionalCommands;
 import com.mjc.school.repository.BaseRepository;
+import com.mjc.school.repository.NewsCommands;
 import com.mjc.school.repository.model.impl.Author;
 import com.mjc.school.repository.model.impl.News;
 import com.mjc.school.repository.model.impl.Tag;
@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class NewsRepository implements BaseRepository<News, Long>, AdditionalCommands<News, Long> {
+public class NewsRepository implements BaseRepository<News, Long>, NewsCommands<News, Long> {
 
 
     private EntityManager entityManager;

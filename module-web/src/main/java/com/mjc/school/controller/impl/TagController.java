@@ -1,21 +1,26 @@
 package com.mjc.school.controller.impl;
 
 import com.mjc.school.controller.BaseController;
+import com.mjc.school.controller.TagCommandsController;
 import com.mjc.school.controller.annotations.CommandHandler;
+import com.mjc.school.service.BaseService;
+import com.mjc.school.service.TagCommandsService;
 import com.mjc.school.service.dto.TagDTORequest;
 import com.mjc.school.service.dto.TagDTOResponse;
 import com.mjc.school.service.exceptions.*;
-import com.mjc.school.service.impl.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import java.util.List;
 
 @Controller
-public class TagController implements BaseController<TagDTORequest, TagDTOResponse, Long> {
+public class TagController implements BaseController<TagDTORequest, TagDTOResponse, Long>, TagCommandsController<TagDTOResponse, Long> {
 
     @Autowired
-    private TagService service;
+    private BaseService<TagDTORequest, TagDTOResponse, Long> service;
+
+    @Autowired
+    private TagCommandsService<TagDTOResponse, Long> tagCommandsService;
 
     @Override
     @CommandHandler(commandNumber = 11)
@@ -55,9 +60,10 @@ public class TagController implements BaseController<TagDTORequest, TagDTORespon
         return service.deleteById(id);
     }
 
+    @Override
     @CommandHandler(commandNumber = 21)
     public List<TagDTOResponse> readTagsByNewsId(Long id) {
-        service.readTagsByNewsId(id).forEach(System.out::println);
-        return service.readTagsByNewsId(id);
+        tagCommandsService.readTagsByNewsId(id).forEach(System.out::println);
+        return tagCommandsService.readTagsByNewsId(id);
     }
 }

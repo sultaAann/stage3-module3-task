@@ -1,6 +1,7 @@
 package com.mjc.school.repository.impl;
 
 import com.mjc.school.repository.BaseRepository;
+import com.mjc.school.repository.TagCommands;
 import com.mjc.school.repository.model.impl.News;
 import com.mjc.school.repository.model.impl.Tag;
 import org.springframework.stereotype.Repository;
@@ -13,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class TagRepository implements BaseRepository<Tag, Long> {
+public class TagRepository implements BaseRepository<Tag, Long>, TagCommands<Tag, Long> {
 
     private EntityManager entityManager;
 
@@ -60,7 +61,9 @@ public class TagRepository implements BaseRepository<Tag, Long> {
         return entityManager.contains(model);
     }
 
+
     //Additional Commands
+    @Override
     public List<Tag> readTagsByNewsId(Long id) {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Tag> criteriaQuery = criteriaBuilder.createQuery(Tag.class);

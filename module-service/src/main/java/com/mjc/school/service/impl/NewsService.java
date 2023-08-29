@@ -1,9 +1,11 @@
 package com.mjc.school.service.impl;
 
+import com.mjc.school.repository.BaseRepository;
+import com.mjc.school.repository.NewsCommands;
 import com.mjc.school.repository.model.impl.Author;
 import com.mjc.school.repository.model.impl.News;
-import com.mjc.school.repository.impl.NewsRepository;
 import com.mjc.school.service.BaseService;
+import com.mjc.school.service.NewsCommandsService;
 import com.mjc.school.service.dto.NewsDTORequest;
 import com.mjc.school.service.dto.NewsDTOResponse;
 import com.mjc.school.service.exceptions.NewsIDException;
@@ -16,9 +18,11 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class NewsService implements BaseService<NewsDTORequest, NewsDTOResponse, Long> {
+public class NewsService implements BaseService<NewsDTORequest, NewsDTOResponse, Long>, NewsCommandsService<NewsDTOResponse, Long> {
     @Autowired
-    private NewsRepository repository;
+    private NewsCommands<News, Long> newsCommands;
+    @Autowired
+    private BaseRepository<News, Long> repository;
 
     @Override
     public List<NewsDTOResponse> readAll() {
@@ -69,32 +73,37 @@ public class NewsService implements BaseService<NewsDTORequest, NewsDTOResponse,
         return repository.deleteById(id);
     }
 
+    @Override
     public List<NewsDTOResponse> readByTagName(String tagName) {
-        return repository.readByTagName(tagName).stream()
+        return newsCommands.readByTagName(tagName).stream()
                 .map(NewsMapper.INSTANCE::modelToDto)
                 .toList();
     }
 
+    @Override
     public List<NewsDTOResponse> readByTagId(Long tagId) {
-        return repository.readByTagId(tagId).stream()
+        return newsCommands.readByTagId(tagId).stream()
                 .map(NewsMapper.INSTANCE::modelToDto)
                 .toList();
     }
 
+    @Override
     public List<NewsDTOResponse> readByAuthorName(String authorName) {
-        return repository.readByAuthorName(authorName).stream()
+        return newsCommands.readByAuthorName(authorName).stream()
                 .map(NewsMapper.INSTANCE::modelToDto)
                 .toList();
     }
 
+    @Override
     public List<NewsDTOResponse> readByTitle(String title) {
-        return repository.readByTitle(title).stream()
+        return newsCommands.readByTitle(title).stream()
                 .map(NewsMapper.INSTANCE::modelToDto)
                 .toList();
     }
 
+    @Override
     public List<NewsDTOResponse> readByContent(String content) {
-        return repository.readByContent(content).stream()
+        return newsCommands.readByContent(content).stream()
                 .map(NewsMapper.INSTANCE::modelToDto)
                 .toList();
     }

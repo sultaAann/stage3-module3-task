@@ -1,20 +1,26 @@
 package com.mjc.school.controller.impl;
 
+import com.mjc.school.controller.AuthorCommandsController;
 import com.mjc.school.controller.BaseController;
 import com.mjc.school.controller.annotations.CommandHandler;
+import com.mjc.school.service.AuthorCommandsService;
+import com.mjc.school.service.BaseService;
 import com.mjc.school.service.dto.AuthorDTORequest;
 import com.mjc.school.service.dto.AuthorDTOResponse;
 import com.mjc.school.service.exceptions.*;
-import com.mjc.school.service.impl.AuthorService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import java.util.List;
 
 @Controller
-public class AuthorController implements BaseController<AuthorDTORequest, AuthorDTOResponse, Long> {
+public class AuthorController implements BaseController<AuthorDTORequest, AuthorDTOResponse, Long>, AuthorCommandsController<AuthorDTOResponse, Long> {
     @Autowired
-    private AuthorService service;
+    private BaseService<AuthorDTORequest, AuthorDTOResponse, Long> service;
+
+    @Autowired
+    private AuthorCommandsService<AuthorDTOResponse, Long> authorCommandsService;
 
     @Autowired
     private NewsController newsController;
@@ -57,9 +63,10 @@ public class AuthorController implements BaseController<AuthorDTORequest, Author
         return service.deleteById(id);
     }
 
+    @Override
     @CommandHandler(commandNumber = 22)
     public List<AuthorDTOResponse> readAuthorByNewsId(Long id) {
-        service.readAuthorByNewsId(id).forEach(System.out::println);
-        return service.readAuthorByNewsId(id);
+        authorCommandsService.readAuthorByNewsId(id).forEach(System.out::println);
+        return authorCommandsService.readAuthorByNewsId(id);
     }
 }

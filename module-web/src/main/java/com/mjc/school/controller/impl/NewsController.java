@@ -1,7 +1,10 @@
 package com.mjc.school.controller.impl;
 
 import com.mjc.school.controller.BaseController;
+import com.mjc.school.controller.NewsCommandsController;
 import com.mjc.school.controller.annotations.CommandHandler;
+import com.mjc.school.service.BaseService;
+import com.mjc.school.service.NewsCommandsService;
 import com.mjc.school.service.dto.NewsDTORequest;
 import com.mjc.school.service.dto.NewsDTOResponse;
 import com.mjc.school.service.exceptions.*;
@@ -13,10 +16,13 @@ import java.util.List;
 import java.util.Scanner;
 
 @Controller
-public class NewsController implements BaseController<NewsDTORequest, NewsDTOResponse, Long> {
+public class NewsController implements BaseController<NewsDTORequest, NewsDTOResponse, Long>, NewsCommandsController<NewsDTOResponse, Long> {
     private final Scanner scanner = new Scanner(System.in);
     @Autowired
-    private NewsService service;
+    private BaseService<NewsDTORequest, NewsDTOResponse, Long> service;
+
+    @Autowired
+    private NewsCommandsService<NewsDTOResponse, Long> newsCommandsService;
 
     @Override
     @CommandHandler(commandNumber = 1)
@@ -68,7 +74,7 @@ public class NewsController implements BaseController<NewsDTORequest, NewsDTORes
                 if (newsDTOResponse.authorId() == id) {
                     try {
                         service.deleteById(newsDTOResponse.id());
-                    } catch (NewsIDException e) {
+                    } catch (NewsIDException | TagIDException | AuthorIDException e) {
                         throw new RuntimeException(e);
                     }
                 }
@@ -79,7 +85,8 @@ public class NewsController implements BaseController<NewsDTORequest, NewsDTORes
                 if (newsDTOResponse.authorId() == id) {
                     try {
                         service.update(new NewsDTORequest(newsDTOResponse.id(), newsDTOResponse.title(), newsDTOResponse.content(), null));
-                    } catch (TitleOrContentLengthException | NewsIDException e) {
+                    } catch (TitleOrContentLengthException | NewsIDException | TagNameException | TagIDException |
+                             AuthorNameException | AuthorIDException e) {
                         throw new RuntimeException(e);
                     }
                 }
@@ -89,28 +96,33 @@ public class NewsController implements BaseController<NewsDTORequest, NewsDTORes
     }
 
     // Additional Commands
+    @Override
     @CommandHandler(commandNumber = 16)
     public List<NewsDTOResponse> readByTagName(String tagName) {
-        return service.readByTagName(tagName);
+        return newsCommandsService.readByTagName(tagName);
     }
 
+    @Override
     @CommandHandler(commandNumber = 17)
     public List<NewsDTOResponse> readByTagId(Long tagId) {
-        return service.readByTagId(tagId);
+        return newsCommandsService.readByTagId(tagId);
     }
 
+    @Override
     @CommandHandler(commandNumber = 18)
     public List<NewsDTOResponse> readByAuthorName(String authorName) {
-        return service.readByAuthorName(authorName);
+        return newsCommandsService.readByAuthorName(authorName);
     }
 
+    @Override
     @CommandHandler(commandNumber = 19)
     public List<NewsDTOResponse> readByTitle(String title) {
-        return service.readByTitle(title);
+        return newsCommandsService.readByTitle(title);
     }
 
+    @Override
     @CommandHandler(commandNumber = 20)
     public List<NewsDTOResponse> readByContent(String content) {
-        return service.readByContent(content);
+        return newsCommandsService.readByContent(content);
     }
 }

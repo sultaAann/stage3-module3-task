@@ -1,6 +1,7 @@
 package com.mjc.school.repository.impl;
 
 
+import com.mjc.school.repository.AuthorCommands;
 import com.mjc.school.repository.BaseRepository;
 import com.mjc.school.repository.model.impl.Author;
 import com.mjc.school.repository.model.impl.News;
@@ -8,7 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
 import javax.persistence.criteria.*;
 import java.time.LocalDateTime;
@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class AuthorRepository implements BaseRepository<Author, Long> {
+public class AuthorRepository implements BaseRepository<Author, Long>, AuthorCommands<Author, Long> {
 
     private EntityManager entityManager;
 
@@ -65,8 +65,8 @@ public class AuthorRepository implements BaseRepository<Author, Long> {
         return entityManager.contains(author);
     }
 
-
     // Additional command
+    @Override
     public List<Author> readAuthorByNewsId(Long id) {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Author> criteriaQuery = criteriaBuilder.createQuery(Author.class);

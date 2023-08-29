@@ -1,8 +1,10 @@
 package com.mjc.school.service.impl;
 
+import com.mjc.school.repository.BaseRepository;
+import com.mjc.school.repository.TagCommands;
 import com.mjc.school.repository.model.impl.Tag;
-import com.mjc.school.repository.impl.TagRepository;
 import com.mjc.school.service.BaseService;
+import com.mjc.school.service.TagCommandsService;
 import com.mjc.school.service.dto.TagDTORequest;
 import com.mjc.school.service.dto.TagDTOResponse;
 import com.mjc.school.service.exceptions.AuthorIDException;
@@ -17,10 +19,13 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class TagService implements BaseService<TagDTORequest, TagDTOResponse, Long> {
+public class TagService implements BaseService<TagDTORequest, TagDTOResponse, Long>, TagCommandsService<TagDTOResponse, Long> {
 
     @Autowired
-    private TagRepository repository;
+    private BaseRepository<Tag, Long> repository;
+
+    @Autowired
+    private TagCommands<Tag, Long> tagCommands;
 
     @Override
     public List<TagDTOResponse> readAll() {
@@ -61,8 +66,9 @@ public class TagService implements BaseService<TagDTORequest, TagDTOResponse, Lo
         return repository.deleteById(id);
     }
 
+    @Override
     public List<TagDTOResponse> readTagsByNewsId(Long id) {
-        return repository.readTagsByNewsId(id).stream()
+        return tagCommands.readTagsByNewsId(id).stream()
                 .map(TagMapper.INSTANCE::modelToDto)
                 .toList();
     }
