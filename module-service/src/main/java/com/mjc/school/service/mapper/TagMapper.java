@@ -1,6 +1,6 @@
 package com.mjc.school.service.mapper;
 
-import com.mjc.school.repository.entity.impl.Tag;
+import com.mjc.school.repository.model.impl.Tag;
 import com.mjc.school.service.dto.TagDTORequest;
 import com.mjc.school.service.dto.TagDTOResponse;
 import org.mapstruct.Mapper;

@@ -1,14 +1,12 @@
-package com.mjc.school.repository.implRepo;
+package com.mjc.school.repository.impl;
 
 import com.mjc.school.repository.AdditionalCommands;
 import com.mjc.school.repository.BaseRepository;
-import com.mjc.school.repository.entity.impl.Author;
-import com.mjc.school.repository.entity.impl.News;
-import com.mjc.school.repository.entity.impl.Tag;
-import org.hibernate.Session;
+import com.mjc.school.repository.model.impl.Author;
+import com.mjc.school.repository.model.impl.News;
+import com.mjc.school.repository.model.impl.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -19,7 +17,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-@Transactional(readOnly = true)
 public class NewsRepository implements BaseRepository<News, Long>, AdditionalCommands<News, Long> {
 
 
@@ -66,12 +63,10 @@ public class NewsRepository implements BaseRepository<News, Long>, AdditionalCom
 
     @Override
     public boolean deleteById(Long id) {
-        Session session = entityManager.unwrap(Session.class);
         if (existById(id)) {
-            session.getTransaction().begin();
-            session.remove(id);
-            session.getTransaction().commit();
-            session.close();
+            entityManager.getTransaction().begin();
+            entityManager.remove(id);
+            entityManager.getTransaction().commit();
             return true;
         } else {
             return false;

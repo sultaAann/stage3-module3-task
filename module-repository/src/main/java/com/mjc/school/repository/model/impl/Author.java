@@ -1,6 +1,6 @@
-package com.mjc.school.repository.entity.impl;
+package com.mjc.school.repository.model.impl;
 
-import com.mjc.school.repository.entity.BaseEntity;
+import com.mjc.school.repository.model.BaseEntity;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -41,7 +41,7 @@ public class Author implements BaseEntity<Long> {
     }
 
     public void setName(String name) {
-        name = name;
+        this.name = name;
     }
 
     public LocalDateTime getCreatedDate() {

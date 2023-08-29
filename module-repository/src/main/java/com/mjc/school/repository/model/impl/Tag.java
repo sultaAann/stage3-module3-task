@@ -1,6 +1,7 @@
-package com.mjc.school.repository.entity.impl;
+package com.mjc.school.repository.model.impl;
 
-import com.mjc.school.repository.entity.BaseEntity;
+import com.mjc.school.repository.model.BaseEntity;
+import com.mjc.school.repository.model.impl.News;
 
 import javax.persistence.*;
 import java.util.List;
@@ -34,7 +35,7 @@ public class Tag implements BaseEntity<Long> {
     }
 
     public void setName(String name) {
-        name = name;
+        this.name = name;
     }
 
 }

@@ -1,6 +1,6 @@
 package com.mjc.school.repository;
 
-import com.mjc.school.repository.entity.BaseEntity;
+import com.mjc.school.repository.model.BaseEntity;
 
 import java.util.List;
 import java.util.Optional;

@@ -1,9 +1,9 @@
-package com.mjc.school.repository.implRepo;
+package com.mjc.school.repository.impl;
 
 
 import com.mjc.school.repository.BaseRepository;
-import com.mjc.school.repository.entity.impl.Author;
-import com.mjc.school.repository.entity.impl.News;
+import com.mjc.school.repository.model.impl.Author;
+import com.mjc.school.repository.model.impl.News;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

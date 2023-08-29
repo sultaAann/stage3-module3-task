@@ -1,6 +1,6 @@
 package com.mjc.school.service.mapper;
 
-import com.mjc.school.repository.entity.impl.Author;
+import com.mjc.school.repository.model.impl.Author;
 import com.mjc.school.service.dto.AuthorDTORequest;
 import com.mjc.school.service.dto.AuthorDTOResponse;
 import org.mapstruct.Mapper;

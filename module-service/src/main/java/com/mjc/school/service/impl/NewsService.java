@@ -1,8 +1,8 @@
 package com.mjc.school.service.impl;
 
-import com.mjc.school.repository.entity.impl.Author;
-import com.mjc.school.repository.entity.impl.News;
-import com.mjc.school.repository.implRepo.NewsRepository;
+import com.mjc.school.repository.model.impl.Author;
+import com.mjc.school.repository.model.impl.News;
+import com.mjc.school.repository.impl.NewsRepository;
 import com.mjc.school.service.BaseService;
 import com.mjc.school.service.dto.NewsDTORequest;
 import com.mjc.school.service.dto.NewsDTOResponse;
