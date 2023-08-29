@@ -19,24 +19,23 @@ subprojects {
     }
 
     dependencies {
-        implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.7.7'
-        implementation 'org.hibernate:hibernate-entitymanager:5.6.14.Final'
-
-        // https://mvnrepository.com/artifact/mysql/mysql-connector-java
-        implementation 'mysql:mysql-connector-java:8.0.20'
-
-
         implementation "org.springframework:spring-context:$springVersion"
-        implementation "org.springframework:spring-core:$springVersion"
-
 
         testImplementation "org.springframework:spring-test:$springVersion"
         testImplementation "org.junit.jupiter:junit-jupiter-api:$jupiterVersion"
         testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$jupiterVersion"
-        testImplementation "com.tngtech.archunit:archunit:$archUnitVersion"
+        testImplementation "com.tngtech.archunit:archunit-junit5:$archUnitVersion"
 
         annotationProcessor "org.mapstruct:mapstruct-processor:$mapstructVersion"
         implementation "org.mapstruct:mapstruct:$mapstructVersion"
+
+        compileOnly 'org.projectlombok:lombok:1.18.22'
+        annotationProcessor 'org.projectlombok:lombok:1.18.22'
+        testCompileOnly 'org.projectlombok:lombok:1.18.22'
+        testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
+        testImplementation 'org.assertj:assertj-core:3.24.2'
+
+        implementation "org.springframework.boot:spring-boot-starter-data-jpa:$dataJpaVersion"
     }
     test {
         useJUnitPlatform()
