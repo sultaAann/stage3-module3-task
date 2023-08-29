@@ -7,7 +7,10 @@ import com.mjc.school.repository.model.impl.News;
 import com.mjc.school.repository.model.impl.Tag;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.*;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceUnit;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -15,7 +18,6 @@ import java.util.Optional;
 
 @Repository
 public class NewsRepository implements BaseRepository<News, Long>, AdditionalCommands<News, Long> {
-
 
 
     private EntityManager entityManager;
