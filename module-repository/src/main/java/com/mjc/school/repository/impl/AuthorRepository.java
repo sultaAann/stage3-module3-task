@@ -4,11 +4,10 @@ package com.mjc.school.repository.impl;
 import com.mjc.school.repository.BaseRepository;
 import com.mjc.school.repository.model.impl.Author;
 import com.mjc.school.repository.model.impl.News;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.*;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,12 +16,8 @@ import java.util.Optional;
 @Repository
 public class AuthorRepository implements BaseRepository<Author, Long> {
 
+    @PersistenceContext
     private EntityManager entityManager;
-
-    @Autowired
-    public void setEntityManager(EntityManagerFactory entityManagerFactory) {
-        this.entityManager = entityManagerFactory.createEntityManager();
-    }
 
     @Override
     public List<Author> readAll() {

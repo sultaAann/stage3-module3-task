@@ -3,23 +3,18 @@ package com.mjc.school.repository.impl;
 import com.mjc.school.repository.BaseRepository;
 import com.mjc.school.repository.model.impl.News;
 import com.mjc.school.repository.model.impl.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.*;
 import java.util.List;
 import java.util.Optional;
 
 @Repository
 public class TagRepository implements BaseRepository<Tag, Long> {
+    @PersistenceContext
     private EntityManager entityManager;
-
-    @Autowired
-    public void setEntityManager(EntityManagerFactory entityManagerFactory) {
-        this.entityManager = entityManagerFactory.createEntityManager();
-    }
 
     @Override
     public List<Tag> readAll() {

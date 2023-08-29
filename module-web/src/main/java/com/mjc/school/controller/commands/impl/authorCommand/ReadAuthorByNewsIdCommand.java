@@ -5,8 +5,6 @@ import com.mjc.school.controller.MessageHandler;
 import com.mjc.school.controller.commands.Command;
 import com.mjc.school.service.dto.AuthorDTORequest;
 import com.mjc.school.service.dto.AuthorDTOResponse;
-import com.mjc.school.service.dto.TagDTORequest;
-import com.mjc.school.service.dto.TagDTOResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
