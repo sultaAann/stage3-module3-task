@@ -19,12 +19,15 @@ subprojects {
     }
 
     dependencies {
-        implementation "org.springframework.boot:spring-boot-starter-data-jpa:2.7.7"
-        // https://mvnrepository.com/artifact/org.hibernate/hibernate-entitymanager
+        implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.7.7'
         implementation 'org.hibernate:hibernate-entitymanager:5.6.14.Final'
 
         // https://mvnrepository.com/artifact/mysql/mysql-connector-java
         implementation 'mysql:mysql-connector-java:8.0.20'
+
+
+        implementation "org.springframework:spring-context:$springVersion"
+        implementation "org.springframework:spring-core:$springVersion"
 
 
         testImplementation "org.springframework:spring-test:$springVersion"
